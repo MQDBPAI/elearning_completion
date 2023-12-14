@@ -45,9 +45,22 @@ rm(locating)
 
 staffing <- function(){
   
-  staff <- list.files(path = locations[["staff_counts_loc"]]) %>%
+  if (!dir.exists(list.files(path =locations[["staff_counts_loc"]])  %>%
     last() %>%
-    paste(locations[["staff_counts_loc"]], ., sep = "\\") %>%
+    paste(locations[["staff_counts_loc"]], ., sep = "\\"))) {
+    
+    staff <- list.files() %>% 
+      str_subset('.xlsx')
+    
+    } else {
+      
+    staff <- list.files(path = locations[["staff_counts_loc"]]) %>%
+      last() %>%
+      paste(locations[["staff_counts_loc"]], ., sep = "\\")
+        
+    }
+  
+  staff <- staff %>% 
     readxl::read_excel(sheet = 2) %>%
     janitor::clean_names() %>%
     select(primary_email_address, 
@@ -62,6 +75,9 @@ staffing <- function(){
     mutate(email = tolower(email))
   
 }
+
+
+
 
 
 #' SharePoint e-learning logs
