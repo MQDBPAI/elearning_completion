@@ -1,7 +1,11 @@
 
 
-staff <- staffing() # staff dataframe - works
+cut_off_date <- (config::get())[["date"]] %>% 
+  as.Date()
+  
 
+
+staff <- staffing()
 
 
 logs <- logging()
@@ -20,11 +24,14 @@ logs <- logging()
     filter(attempt>=1) %>%
     separate(started_on, into = c("Date", "Time"), sep = ",") %>%
     transform(Date =as.Date(Date, "%d %B %Y")) %>%
-    #filter(Date <= as.Date(date)) %>% 
-    select(-Time) %>%
+    filter(Date <= cut_off_date) %>% 
+    select(-Time, -attempt) %>%
     mutate(course = 1, 
-           email = tolower(email)) 
-}
+           email = tolower(email)) %>% 
+    mutate(email = str_replace_all(email,"&#039;", "\'"))
+  }
+  
+  
   
   names(courses_list) <- c("QSIG", "CoP")
 
@@ -35,3 +42,4 @@ logs <- logging()
      course,
      locations,
      logs)
+  
