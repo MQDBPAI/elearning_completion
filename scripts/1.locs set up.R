@@ -53,7 +53,7 @@ staffing <- function(){
     } else {
       
     staff <- list.files(path = locations[["staff_counts_loc"]]) %>%
-      dplyr::nth(-2) %>%
+      dplyr::last() %>%
       paste(locations[["staff_counts_loc"]], ., sep = "\\")
         
     }

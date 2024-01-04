@@ -2,4 +2,4 @@ default:
   logs_loc: "\\Office for National Statistics\\Data Quality Hub - e-learning_completion\\1.E-learning_logs"
   staff_counts_loc: "\\Office for National Statistics\\People Analytics - Monthly Outputs for Reggie\\Staffcounts\\2023-2024"
   outputs_loc: "\\Office for National Statistics\\Data Quality Hub - e-learning_completion\\2.Exports\\"
-  date: "2023-11-30"
+  date: "2023-12-31"
