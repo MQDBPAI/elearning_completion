@@ -32,7 +32,7 @@ rm(locating)
 
 
 ################################################################################
-##                             DATA & Functions                               ##
+##                   Functions for loading the data                           ##
 ################################################################################
 
 
@@ -45,9 +45,7 @@ rm(locating)
 
 staffing <- function(){
   
-  if (!dir.exists(list.files(path =locations[["staff_counts_loc"]])  %>%
-    last() %>%
-    paste(locations[["staff_counts_loc"]], ., sep = "\\"))) {
+  if (!dir.exists(locations[["staff_counts_loc"]])) {
     
     staff <- list.files() %>% 
       str_subset('.xlsx')
@@ -55,7 +53,7 @@ staffing <- function(){
     } else {
       
     staff <- list.files(path = locations[["staff_counts_loc"]]) %>%
-      last() %>%
+      dplyr::nth(-2) %>%
       paste(locations[["staff_counts_loc"]], ., sep = "\\")
         
     }
