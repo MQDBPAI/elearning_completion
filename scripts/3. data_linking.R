@@ -45,7 +45,7 @@ cop_prc <- round(sum(ONS_training_all$COP)/nrow(ONS_training_all)*100,2)
 
 qsig_prc <- round(sum(ONS_training_all$QSIG)/nrow(ONS_training_all)*100,2)
 
-all_ONS <- data.frame("month" = paste0("month_", month(cut_off_date)),
+all_ONS <- data.frame("month" = paste0("month_", lubridate::month(cut_off_date)),
                       "cop" = paste0(cop_prc, "%"), 
                       "qsig" = paste0(qsig_prc, "%")
                       )
@@ -108,10 +108,10 @@ export <- list("ONS_metrics" = all_ONS,
 
 writexl::write_xlsx(export, paste0(Sys.getenv("USERPROFILE"),
                                   (config::get())[["outputs_loc"]], 
-                                   year(cut_off_date),
+                                   lubridate::year(cut_off_date),
                                    "_",
-                                   month(cut_off_date), 
-                                   "_elearning_metrics.xlsx"))
+                                   lubridate::month(cut_off_date), 
+                                   "_elearning_metrics_friday.xlsx"))
                                               
 
 

@@ -88,7 +88,7 @@ staffing <- function(){
 logging <- function(){
   
   logs_data <- list.files(path = locations[["logs_loc"]]) %>%
-    tail(2) %>%
+    head(2) %>%
     paste(locations[["logs_loc"]], ., sep = "\\")
   
   
