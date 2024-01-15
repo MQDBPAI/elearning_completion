@@ -8,7 +8,7 @@ to produce completion rate metrics.
 The completion rate is calculated as the quotient of:
 
 - total employees that completed the training up to end of the reporting month
-- total employees in a given month
+- total employees in a given month.
 
 Note that the completion rate is thus a 'snapshot'.
 
