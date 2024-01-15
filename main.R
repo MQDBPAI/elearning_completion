@@ -20,7 +20,7 @@
 #                                                                              #
 ################################################################################
 
-# First Downloand the longs in the SharePoint folder. Make sure you give
+# First Download the logs in the SharePoint folder. Make sure you give
 # them today's date. The code is configured to pick the most recent files
 
 # Open the yaml file and change the date up to which you want data
