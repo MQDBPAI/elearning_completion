@@ -15,4 +15,4 @@ Note that the completion rate is thus a 'snapshot'.
 
 ## To run the code
 
-Clone the repo locally and open the main.R script to follow the instruction from there.
+Clone the repo locally and open the main.R script to follow the instructions from there.
