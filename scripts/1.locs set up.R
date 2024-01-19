@@ -85,7 +85,7 @@ get_staff_counts <- function(){
 get_elearning_logs <- function(){
   # get last two filepaths from 1.E-learning_logs SP folder
   logs_data <- list.files(path = sp_filepaths[["logs_loc"]]) %>%
-    head(2) %>%
+    tail(2) %>%
     paste(sp_filepaths[["logs_loc"]], ., sep = "\\")
   
   # identify the qsig and cop logs and name them appropriately
