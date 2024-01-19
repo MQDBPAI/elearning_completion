@@ -5,7 +5,8 @@
 # Authors: Margarita Tsakiridou, Holly Donnell, DQHub                          #
 # Date: 04/01/2023                                                             #
 #                                                                              #
-# Desk notes for this project can be found at the associated SharePoint folder #
+# Desk notes for this project can be found at the associated SharePoint (SP)   #
+# folder                                                                       #
 #                                                                              #
 # Inputs                                                                       #
 # The code to run needs access to the                                          #
@@ -20,10 +21,14 @@
 #                                                                              #
 ################################################################################
 
-# First Download the logs in the SharePoint folder. Make sure you give
-# them today's date. The code is configured to pick the most recent files
+# First Download both the QSIG and COP logs from Learning Hub and save in the 
+#"Best Practice Assurance and Improvement - E-learning metrics\1.E-learning_logs\1.E-learning_logs" 
+# SharePoint folder. Make sure you give them today's date. The code is 
+# configured to pick the most recent files.
 
-# Open the yaml file and change the date up to which you want data
+# Open the config.yml file and change the value of the date field to the last 
+# day of the previous month for the snapshot you need. E.g., I need the September 
+# snapshot so I set the date to be 2023-09-30
 
 # Now you are set to run the code. Run each of the following lines:
 
@@ -32,19 +37,20 @@
 library(tidyverse)
 
 
-# The following script stores in our environment the locations from which it
-# will pull the data
+# The following script does three things:
+# defines the locations to read in and output the data needed 
+# provides a function for reading and formatting in QSIG & COP data
+# provides a function for reading and formatting the staff counts data 
 
 source("./scripts/1.locs set up.R", echo=FALSE)
 
 # Here we load the data. After we run this script we should have a 
 # 'courses_list' list  with two data frames (1 for each course) and the staff
-# data frame. We are now ready  to link the data and obtain the metrics
+# data frame. We will then be ready to link the data and obtain the metrics
 
 source("./scripts/2. Data loading.R", echo=FALSE)
 
-
-# The final script merges the training data with the ONS staff counts and
-# stores them in a list which is exported to SharePoint
+# The final script merges the QSIG & COP data with the staff counts data, creates 
+# the various breakdowns and stores them in a list which is exported to SP
 
 source("./scripts/3. data_linking.R", echo = FALSE)

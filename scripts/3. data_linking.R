@@ -3,116 +3,119 @@
 ##        Training Data      ##
 ################################
 
-QSIG <- courses_list[["QSIG"]] %>% rename(QSIG = course)
-COP <- courses_list[["CoP"]] %>% rename( COP = course)
+QSIG <- courses_list[["QSIG"]] %>% rename(qsig_complete = course)
+COP <- courses_list[["CoP"]] %>% rename(cop_complete = course)
 
-
-
-training_df <- merge(QSIG, COP, by = "email", all = TRUE) %>% 
-  select(email, QSIG, COP)
-
-
-rm(courses_list,
-   QSIG,
-   COP)
-
-
-
+# combining qsig and cop to create user completion status 
+elearning_all <- merge(QSIG, COP, by = "email", all = TRUE) %>% 
+  select(email, qsig_complete, cop_complete)
 
 ################################
 ##            merging         ##
 ################################
 
+# get paths to the staff counts data
+staff_counts <- get_staff_counts()
 
-ONS_training_all <- merge(staff, 
-                          training_df, 
+# attach staff counts to elearning data 
+ons_training_all <- merge(staff_counts, 
+                          elearning_all, 
                           all.x = TRUE, 
                           by = "email") %>% 
-  replace_na(list(COP = 0, QSIG = 0))
-
-
-rm(staff,
-   training_df)
-
+  replace_na(list(cop_complete = 0, qsig_complete = 0))
 
 ################################
 ##          ONS  metrics      ##
 ################################
 
+# calculate completion rates for qsig & cop
+cop_prc <- round(sum(ons_training_all$cop_complete)/nrow(ons_training_all)*100,2)
+qsig_prc <- round(sum(ons_training_all$qsig_complete)/nrow(ons_training_all)*100,2)
 
-
-cop_prc <- round(sum(ONS_training_all$COP)/nrow(ONS_training_all)*100,2)
-
-qsig_prc <- round(sum(ONS_training_all$QSIG)/nrow(ONS_training_all)*100,2)
-
-all_ONS <- data.frame("month" = paste0("month_", lubridate::month(cut_off_date)),
-                      "cop" = paste0(cop_prc, "%"), 
-                      "qsig" = paste0(qsig_prc, "%")
-                      )
-
-rm(cop_prc,
-   qsig_prc)
-
-
+# combine results into one data frame and provide the month name
+total_completion_rate <- data.frame("month" = format(cut_off_date, "%B %Y"),
+                                    "cop" = paste0(cop_prc, "%"), 
+                                    "qsig" = paste0(qsig_prc, "%")
+                                    )
 
 
 ################################
 ##    Breakdowns              ##
 ################################
 
+#' Calculate breakdowns by unit.
+#'
+#' @return list of data frames grouped by area, division etc.
+#' @export
+#'
+#' @examples
 
-breakdowning <- function(){
+calculate_breakdowns <- function(){
   
-  group <-ONS_training_all %>%
-    group_by(area) %>%
-    summarize(cop_prc = round(mean(COP)*100,2),
-              qsig_prc = round(mean(QSIG)*100,2))
+  # Create empty list to populate as we go using a loop
+  breakdown_list <- list()
   
-  directorate <- ONS_training_all %>%
-    group_by(area, directorate) %>%
-    summarize(cop_prc = round(mean(COP)*100,2),
-              qsig_prc = round(mean(QSIG)*100,2))
-  
-  divisions <- ONS_training_all %>%
-    group_by(area, directorate, division) %>%
-    summarize(cop_prc = round(mean(COP)*100,2),
-              qsig_prc = round(mean(QSIG)*100,2))
-  
-  grade <- ONS_training_all %>%
+  # Handling grade separately for clarity
+  breakdown_list[["grade"]] <- ons_training_all %>%
     group_by(grade) %>%
-    summarize(cop_prc = round(mean(COP)*100,2),
-              qsig_prc = round(mean(QSIG)*100,2))
+    summarize(cop_prc = round(mean(cop_complete)*100, 2),
+              qsig_prc = round(mean(qsig_complete)*100, 2))
   
-  breakdowns <- list(group = group,
-                     directorate = directorate,
-                     divisions = divisions,
-                     grade = grade)
+  # Loop allows us to avoid duplicating code
+  # first group by all units e.g (area, directorate, division) and summarise,
+  # then remove the last element from the list e.g. (area, directorate)
+  # Repeat until list is empty.
+  units = c("area", "directorate", "division")
+  while (length(units) > 0) {
+    
+    # This is the name we're going to give to divs
+    # we get this from the lowest aggregation level
+    # e.g. if we're currently grouping by (area, division)
+    # then we will name it division
+    breakdown_name <- tail(units, 1)
+    
+    divs = ons_training_all %>%
+      group_by_at(units) %>%
+      summarize(cop_prc = round(mean(cop_complete)*100, 2),
+                qsig_prc = round(mean(qsig_complete)*100, 2))
+    
+    # Name elements in the list with the lowest aggregation level
+    # e.g. area, directorate -> directorate
+    breakdown_list[[breakdown_name]] <- divs
+    
+    # Remove one aggregation level per iteration
+    # e.g. c("area", "directorate", "division") -> c("area", "directorate")
+    units <- head(units, -1)
+  }
   
+  return(breakdown_list)
 }
 
-breakdown_list <- breakdowning()
-
-rm(breakdowning)
-
+breakdown_list <- calculate_breakdowns()
 
 ################################
 ##      Final Export          ##
 ################################
 
-export <- list("ONS_metrics" = all_ONS,
-               "by_group" = breakdown_list[["group"]],
+# create a list with all breakdowns
+export <- list("ONS_metrics" = total_completion_rate,
+               "by_area" = breakdown_list[["area"]],
                "by_directorate" = breakdown_list[["directorate"]],
-               "by_divisions" = breakdown_list[["divisions"]],
+               "by_division" = breakdown_list[["division"]],
                "by_grade" = breakdown_list[["grade"]],
-               "all_data" = ONS_training_all)
+               "all_data" = ons_training_all)
 
-writexl::write_xlsx(export, paste0(Sys.getenv("USERPROFILE"),
-                                  (config::get())[["outputs_loc"]], 
-                                   lubridate::year(cut_off_date),
-                                   "_",
-                                   lubridate::month(cut_off_date), 
-                                   "_elearning_metrics_friday.xlsx"))
-                                              
+# Create name of file
+# e.g., path\\to\\SP\\2023_9_elearning_metrics.xlsx
+filepath <- paste0(Sys.getenv("USERPROFILE"),
+                   (config::get())[["outputs_loc"]], 
+                   lubridate::year(cut_off_date),
+                   "_",
+                   lubridate::month(cut_off_date), 
+                   "_elearning_metrics_test2.xlsx")
+
+# export file to SP 
+writexl::write_xlsx(export, filepath)
 
 
 
