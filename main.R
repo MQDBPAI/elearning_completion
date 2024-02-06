@@ -1,36 +1,6 @@
-################################################################################ 
-#                                                                              #
-#                                                                              #
-# Title: E-learning Completion Rates for Mandatory Training                    #
-# Authors: Margarita Tsakiridou, Holly Donnell, DQHub                          #
-# Date: 04/01/2023                                                             #
-#                                                                              #
-# Desk notes for this project can be found at the associated SharePoint (SP)   #
-# folder                                                                       #
-#                                                                              #
-# Inputs                                                                       #
-# The code to run needs access to the                                          #
-# 1) People Analytics Folders                                                  #
-# 2) Most up-to-date Learning Hub logs                                         #
-#                                                                              #
-#                                                                              #
-# Outputs                                                                      #
-# It produces a workbook on SharePoint with completion rates as a snapshot     #
-# of the month supplied with breakdowns per organizational structure and grade #
-#                                                                              #  
-#                                                                              #
-################################################################################
 
-# First Download both the QSIG and COP logs from Learning Hub and save in the 
-#"Best Practice Assurance and Improvement - E-learning metrics\1.E-learning_logs\1.E-learning_logs" 
-# SharePoint folder. Make sure you give them today's date. The code is 
-# configured to pick the most recent files.
-
-# Open the config.yml file and change the value of the date field to the last 
-# day of the previous month for the snapshot you need. E.g., I need the September 
-# snapshot so I set the date to be 2023-09-30
-
-# Now you are set to run the code. Run each of the following lines:
+# Now you are set to run the code from the instructions set out in the 
+# README.md file. Run each of the following lines:
 
 # First call the tidyverse package
 

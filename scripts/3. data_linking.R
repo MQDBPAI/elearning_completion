@@ -68,9 +68,10 @@ calculate_breakdowns <- function(){
   units = c("area", "directorate", "division")
   while (length(units) > 0) {
     
-    # This is the name we're going to give to divs
-    # we get this from the lowest aggregation level
-    # e.g. if we're currently grouping by (area, division)
+    # breakdown_name is the name we're going to give to divs in the next part 
+    # of the loop below. we get this by taking the lowest aggregation level 
+    # and using that as the data frame's unique name
+    # e.g. if we're currently grouping by (area,division)
     # then we will name it division
     breakdown_name <- tail(units, 1)
     
@@ -79,7 +80,7 @@ calculate_breakdowns <- function(){
       summarize(cop_prc = round(mean(cop_complete)*100, 2),
                 qsig_prc = round(mean(qsig_complete)*100, 2))
     
-    # Name elements in the list with the lowest aggregation level
+    # Attach names assigned in 'breakdown_name' to each 'divs' output
     # e.g. area, directorate -> directorate
     breakdown_list[[breakdown_name]] <- divs
     
@@ -112,7 +113,7 @@ filepath <- paste0(Sys.getenv("USERPROFILE"),
                    lubridate::year(cut_off_date),
                    "_",
                    lubridate::month(cut_off_date), 
-                   "_elearning_metrics_test2.xlsx")
+                   "_elearning_metrics.xlsx")
 
 # export file to SP 
 writexl::write_xlsx(export, filepath)
