@@ -52,19 +52,19 @@ total_completion_rate <- data.frame("month" = format(cut_off_date, "%B %Y"),
 
 calculate_breakdowns <- function(){
   
-  # Create empty list to populate as we go using a loop
+  # create empty list to populate as we go using a loop
   breakdown_list <- list()
   
-  # Handling grade separately for clarity
+  # handling grade separately for clarity
   breakdown_list[["grade"]] <- ons_training_all %>%
     group_by(grade) %>%
     summarize(cop_prc = round(mean(cop_complete)*100, 2),
               qsig_prc = round(mean(qsig_complete)*100, 2))
   
-  # Loop allows us to avoid duplicating code
+  # loop allows us to avoid duplicating code
   # first group by all units e.g (area, directorate, division) and summarise,
   # then remove the last element from the list e.g. (area, directorate)
-  # Repeat until list is empty.
+  # repeat until list is empty.
   units = c("area", "directorate", "division")
   while (length(units) > 0) {
     
@@ -80,11 +80,11 @@ calculate_breakdowns <- function(){
       summarize(cop_prc = round(mean(cop_complete)*100, 2),
                 qsig_prc = round(mean(qsig_complete)*100, 2))
     
-    # Attach names assigned in 'breakdown_name' to each 'divs' output
+    # attach names assigned in 'breakdown_name' to each 'divs' output
     # e.g. area, directorate -> directorate
     breakdown_list[[breakdown_name]] <- divs
     
-    # Remove one aggregation level per iteration
+    # remove one aggregation level per iteration
     # e.g. c("area", "directorate", "division") -> c("area", "directorate")
     units <- head(units, -1)
   }
@@ -106,7 +106,7 @@ export <- list("ONS_metrics" = total_completion_rate,
                "by_grade" = breakdown_list[["grade"]],
                "all_data" = ons_training_all)
 
-# Create name of file
+# create name of file
 # e.g., path\\to\\SP\\2023_9_elearning_metrics.xlsx
 filepath <- paste0(Sys.getenv("USERPROFILE"),
                    (config::get())[["outputs_loc"]], 
