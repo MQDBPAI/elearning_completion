@@ -6,10 +6,9 @@
 
 library(tidyverse)
 
-
 # The following script does three things:
 # defines the locations to read in and output the data needed 
-# provides a function for reading and formatting in QSIG & COP data
+# provides a function for reading and formatting the QSIG & COP data
 # provides a function for reading and formatting the staff counts data 
 
 source("./scripts/1.locs set up.R", echo=FALSE)
@@ -21,6 +20,6 @@ source("./scripts/1.locs set up.R", echo=FALSE)
 source("./scripts/2. Data loading.R", echo=FALSE)
 
 # The final script merges the QSIG & COP data with the staff counts data, creates 
-# the various breakdowns and stores them in a list which is exported to SP
+# the various breakdowns and stores them in a list which is exported to SharePoint
 
 source("./scripts/3. data_linking.R", echo = FALSE)
