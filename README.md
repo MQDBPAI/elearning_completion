@@ -2,7 +2,7 @@
 Authors: Margarita Tsakiridou, Holly Donnell, DQHub
 
 
-The code is combining the logs from the Learning Hub Platform and staff counts
+The code is combining the logs from the Learning Hub Platform and staff counts data
 to produce completion rate metrics. 
 
 ## Completion rates calculations
@@ -36,7 +36,7 @@ to your personal file explorer:
 If you are not aware, locate the folders above in your SharePoint and
 click the **Sync** button, see screenshot below:
 
-
+![Syncing_folders](https://github.com/MQDBPAI/elearning_completion/assets/116284001/77dede89-de68-4e37-8f09-98f322312106)
 
 If you are unable to access the staff counts data in your SharePoint folder 
 for some reason, the code will still run on a backup file from your local repo. 
@@ -54,7 +54,7 @@ The git commands you will want to use are:
 ```
 git status
 git add -u
-git commit
+git commit -m "commit message"
 git push -u
 ```
 Make sure you use **'-u'** where noted above, otherwise you will publish the
@@ -63,11 +63,11 @@ staff counts data to this public Git repo.
 
 ### Outputs
 It produces a workbook on SharePoint with completion rates as a snapshot
-of the month supplied with breakdowns per organizational structure and grade.
+of the month supplied with breakdowns per organisational structure and grade.
 
 
 ## Run the code
 
-Now you are set up to run the code, clone the repo locally and open 
+Now you are set to run the code, clone the repo locally and open 
 the main.R script to follow the instructions from there.
 
