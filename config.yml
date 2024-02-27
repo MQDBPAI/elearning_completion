@@ -1,5 +1,6 @@
 default:
   logs_loc: "\\Office for National Statistics\\Best Practice Assurance and Improvement - E-learning metrics\\1.E-learning_logs"
-  staff_counts_loc: "\\Office for National Statistics\\Best Practice Assurance and Improvement - Staff_counts_for_use_in_pipelines"
+  staff_counts_loc: "\\Office for National Statistics\\Best Practice Assurance and Improvement - Quality_champions_DL_and_QIP_tracking\\Staff_counts_for_use_in_pipelines"
   outputs_loc: "\\Office for National Statistics\\Best Practice Assurance and Improvement - E-learning metrics\\2.Exports\\"
-  date: "2023-09-30"
+  date: "2024-01-31"
+

@@ -30,11 +30,11 @@ Make sure you use Ctrl + S to save the date before running the code.
 
 In order for the code to run you need to sync the SharePoint folders below
 to your personal file explorer:
-1. Staff_counts_for_use_in_pipelines
-2. E-learning metrics
+1. [Quality_champions_DL_and_QIP_tracking](https://officenationalstatistics.sharepoint.com/sites/beprasim/Quality%20Improvement%20Plans/Forms/AllItems.aspx?id=%2Fsites%2Fbeprasim%2FQuality%20Improvement%20Plans%2FQuality%5Fchampions%5FDL%5Fand%5FQIP%5Ftracking&viewid=b520aa1e%2De6d5%2D40ec%2D873d%2D464791b272c5) - we only need the staff counts folder from in there, but because we probably all have synced this folder for the champions Python DL, it would be good to stay consistent.
+2. [E-learning metrics](https://officenationalstatistics.sharepoint.com/sites/beprasim/Metrics%20and%20Information/Forms/AllItems.aspx?newTargetListUrl=%2Fsites%2Fbeprasim%2FMetrics%20and%20Information&viewpath=%2Fsites%2Fbeprasim%2FMetrics%20and%20Information%2FForms%2FAllItems%2Easpx&id=%2Fsites%2Fbeprasim%2FMetrics%20and%20Information%2FE%2Dlearning%20metrics%2F1%2EE%2Dlearning%5Flogs&viewid=6f156f8a%2D6331%2D4ee1%2D843c%2Da9efa47124d5)
 
-If you are not aware, locate the folders above in your SharePoint and
-click the **Sync** button, see screenshot below:
+To do this, locate the folders above in your SharePoint and
+click the **Sync** button, see screenshot below. Note that is it very important to sync at exactly the correct level specified, otherwise the code will fail.
 
 ![Syncing_folders](https://github.com/MQDBPAI/elearning_completion/assets/116284001/77dede89-de68-4e37-8f09-98f322312106)
 
@@ -46,7 +46,7 @@ in a usual run of the code, when you have access to the staff counts from the
 Staff_counts_for_use_in_pipelines folder.
 
 **Important Note**, if you do run the code using staff counts in your local 
-repo and make any changes that you wish to committ back to Git, it is 
+repo and make any changes that you wish to commit back to Git, it is 
 **very important** you use certain commands to ensure you are not publishing 
 those staff counts to this public online Git repo.
 

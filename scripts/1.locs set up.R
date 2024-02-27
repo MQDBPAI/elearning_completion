@@ -58,14 +58,14 @@ get_staff_counts <- function(){
   }
   # clean and format staff counts data 
   staff <- staff %>% 
-    readxl::read_excel(sheet = 2) %>%
+    readxl::read_excel() %>%
     janitor::clean_names() %>%
-    select(primary_email_address, 
+    select(email_address, 
            group, 
            directorate, 
            division, 
            grade) %>%
-    dplyr::rename(email = primary_email_address, area = group) %>%
+    dplyr::rename(email = email_address, area = group) %>%
     transform(area = as.factor(area), 
               directorate = as.factor(directorate), 
               division = as.factor(division)) %>% 
