@@ -71,3 +71,10 @@ of the month supplied with breakdowns per organisational structure and grade.
 Now you are set to run the code, clone the repo locally and open 
 the main.R script to follow the instructions from there.
 
+
+## QA the code
+
+- Inspect the exports and ensure that columns and data look sensible
+- In your local directory folder you will find a log_YYYY-MM-DD.txt file with
+'today's' date. This shows the 3 input files used and the cut off date used.
+Inspect to ensure the correct files have been picked up.

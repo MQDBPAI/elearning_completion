@@ -46,18 +46,18 @@ get_staff_counts <- function(){
   # if you can find the file in SP
   if (dir.exists(sp_filepaths[["staff_counts_loc"]])) {
     # select the latest version
-    staff <- list.files(path = sp_filepaths[["staff_counts_loc"]]) %>%
+    staff_str <- list.files(path = sp_filepaths[["staff_counts_loc"]]) %>%
       dplyr::last() %>%
       paste(sp_filepaths[["staff_counts_loc"]], ., sep = "\\")
     
   # if you can't find the staff counts file in SP (see config.yml file) 
   # then look in your local repo and select the excel file present
   } else {
-    staff <- list.files() %>% 
+    staff_str <- list.files() %>% 
       str_subset('.xlsx') #this relies on you having one excel file 
   }
   # clean and format staff counts data 
-  staff <- staff %>% 
+  staff <- staff_str %>% 
     readxl::read_excel() %>%
     janitor::clean_names() %>%
     select(email_address, 
